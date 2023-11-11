@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using static Unity.Mathematics.math;
 
+/// 이 클래스는 
 [System.Serializable]
 public class ArtifactData
 {
