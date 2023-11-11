@@ -1,0 +1,3 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <ui:Button text="Generate Full Screen Quad Mesh" display-tooltip-when-elided="true" name="Button" />
+</ui:UXML>

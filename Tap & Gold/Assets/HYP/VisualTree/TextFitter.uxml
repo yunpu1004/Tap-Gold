@@ -1,0 +1,4 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <ui:IntegerField label="Standard Font Size" value="0" name="StandardSize" binding-path="standardFontSize" style="align-self: auto; align-items: center; justify-content: center;" />
+    <ui:Button text="Refresh" display-tooltip-when-elided="true" name="Refresh" />
+</ui:UXML>

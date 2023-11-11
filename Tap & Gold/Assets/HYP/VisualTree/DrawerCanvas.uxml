@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <ui:GroupBox text="Display On Anchor Pos" name="OnBox" style="align-items: stretch; flex-shrink: 1;">
+        <ui:Vector2Field label="Min" name="OnMin" binding-path="onAnchorMin" style="flex-shrink: 1;" />
+        <ui:Vector2Field label="Max" name="OnMax" binding-path="onAnchorMax" />
+    </ui:GroupBox>
+    <ui:GroupBox text="Display Off Anchor Pos" name="OffBox">
+        <ui:Vector2Field label="Min" name="OffMin" binding-path="offAnchorMin" style="flex-shrink: 1;" />
+        <ui:Vector2Field label="Max" name="OffMax" binding-path="offAnchorMax" />
+    </ui:GroupBox>
+</ui:UXML>
