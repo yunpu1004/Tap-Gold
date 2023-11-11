@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
+/// 이 cs파일은 게임 내의 모든 버튼 이벤트를 관리합니다.
 public partial class ClickerTemp
 {
 
 # region TopCanvas
+
+    /// 초당 획득 골드를 증가시키는 버프를 얻기위한 광고를 시청합니다.
+    /// 광고가 종료되면 게임 상태를 Normal 로 변경하고, 현재 열린 팝업을 닫습니다.
+    /// 이후 30초간 초당 획득 골드가 10배가 됩니다.
     public void ShowAdAndGetSecTempBuff()
     {
         RewardAdRequest.ShowAd(
@@ -28,6 +33,9 @@ public partial class ClickerTemp
     }
 
 
+    /// 탭당 획득 골드를 증가시키는 버프를 얻기위한 광고를 시청합니다.
+    /// 광고가 종료되면 게임 상태를 Normal 로 변경하고, 현재 열린 팝업을 닫습니다.
+    /// 이후 30초간 탭당 획득 골드가 10배가 됩니다.
     public void ShowAdAndGetTapTempBuff()
     {
         RewardAdRequest.ShowAd(
@@ -48,6 +56,7 @@ public partial class ClickerTemp
         });
     }
 
+    /// 볼륨을 On / Off 합니다.
     public void ChangeVolumeOnState()
     {
         bool newState = !volumeOn;
@@ -57,8 +66,11 @@ public partial class ClickerTemp
 # endregion
 
 # region MidCanvas
+
+    /// 화면을 탭하여 골드를 획득할때 호출됩니다.
     public void GetGoldByTap()
     {
+        /// 골드 보유량, 탭 카운트를 증가시키고, 최고 골드 보유량을 갱신합니다.
         gold += realGoldPerTap;
         tapCount++;
         if(gold > highestGold) highestGold = gold;
@@ -66,6 +78,7 @@ public partial class ClickerTemp
 
         RectTransform rectTransform = midCanvas.rectTransformData.rectTransform;
 
+        /// 에디터에서 실행중일때 마우스 위치를 읽어서 tap_normalizedPosList 에 추가합니다.
         #if UNITY_EDITOR
         if(tap_normalizedPosList.Count == 0)
         {
@@ -75,6 +88,7 @@ public partial class ClickerTemp
             tap_normalizedPosList.Add(normalizedPos);
         }
         
+        /// 모바일에서 실행중일때 터치 위치를 읽어서 tap_normalizedPosList 에 추가합니다.
         #elif UNITY_ANDROID
         if(tap_normalizedPosList.Count == 0)
         {
@@ -99,6 +113,8 @@ public partial class ClickerTemp
 
 # region scroll
 
+    /// 탭당 골드 획득 업그레이드 스크롤을 활성화 할 때 호출됩니다.
+    /// 네비게이션 바의 버튼들의 색상을 변경하고, 업그레이드 스크롤을 활성화합니다.
     public void EnableTapUpgradeScroll(bool value)
     {
         if(!value) return;
@@ -131,6 +147,8 @@ public partial class ClickerTemp
         scrollState = ScrollState.TapUpgrade;
     }
 
+    /// 초당 골드 획득 업그레이드 스크롤을 활성화 할 때 호출됩니다.
+    /// 네비게이션 바의 버튼들의 색상을 변경하고, 업그레이드 스크롤을 활성화합니다.
     public void EnableSecUpgradeScroll(bool value)
     {
         if(!value) return;
@@ -163,6 +181,8 @@ public partial class ClickerTemp
         scrollState = ScrollState.SecUpgrade;
     }
 
+    /// 아티팩트 스크롤을 활성화 할 때 호출됩니다.
+    /// 네비게이션 바의 버튼들의 색상을 변경하고, 업그레이드 스크롤을 활성화합니다.
     public void EnableArtifactScroll(bool value)
     {
         if(!value) return;
@@ -193,10 +213,12 @@ public partial class ClickerTemp
         navCanvas_RadioButton_Statistics_Icon.spriteData.SetColor(color);
 
         scrollState = ScrollState.Artifact;
-        Execute_UpdateSpecialTokenText = true;
+        Execute_UpdatePrestigePointText = true;
         Execute_UpdateArtifactScroll = true;
     }
 
+    /// 도전과제 스크롤을 활성화 할 때 호출됩니다.
+    /// 네비게이션 바의 버튼들의 색상을 변경하고, 업그레이드 스크롤을 활성화합니다.
     public void EnableChallengeScroll(bool value)
     {
         if(!value) return;
@@ -230,6 +252,8 @@ public partial class ClickerTemp
         Execute_UpdateChallengeScroll = true;
     }
 
+    /// 통계 스크롤을 활성화 할 때 호출됩니다.
+    /// 네비게이션 바의 버튼들의 색상을 변경하고, 업그레이드 스크롤을 활성화합니다.
     public void EnableStatisticsScroll(bool value)
     {
         if(!value) return;
@@ -267,24 +291,28 @@ public partial class ClickerTemp
 
 # region popup
 
+    /// 탭당 얻는 골드 버프 팝업을 활성화 할 때 호출됩니다.
     public void EnableTapTempBuffPopup(bool value)
     {
         tapTempBuff.SetDisplay(value);
         popupState = (value) ?PopupState.TapTempBuff :PopupState.None;
     }
 
+    /// 초당 얻는 골드 버프 팝업을 활성화 할 때 호출됩니다.
     public void EnableSecTempBuffPopup(bool value)
     {
         secTempBuff.SetDisplay(value);
         popupState = (value) ?PopupState.SecTempBuff :PopupState.None;
     }
 
+    /// 프레스티지 팝업을 활성화 할 때 호출됩니다.
     public void EnablePrestigePopup(bool value)
     {
         prestige.SetDisplay(value);
         popupState = (value) ?PopupState.Prestige :PopupState.None;
     }
 
+    /// 유물 가챠 팝업을 활성화 할 때 호출됩니다.
     public void EnableGachaPopup(bool value)
     {
         gacha.SetDisplay(value);
@@ -292,6 +320,7 @@ public partial class ClickerTemp
         popupState = (value) ?PopupState.Gacha :PopupState.None;
     }
 
+    /// 광고 시청으로 인한 골드 획득 팝업을 활성화 할 때 호출됩니다.
     public void EnableSpecialBonusPopup(bool value)
     {
         midCanvas_SpecialBonus_Button.animationData.SetCurrentState("IDLE");
@@ -306,23 +335,20 @@ public partial class ClickerTemp
 
 # region Gacha
 
-    /// === 실행 조건 ===
-    /// 1. Gacha_Button 이 클릭될 때
-    /// === 실행 내용 ===
-    /// 1. artifactList 에 있는 Artifact 의 buffID 를 제외한 1 ~ 15 사이의 숫자 중 하나를 랜덤으로 선택한다
-    /// 2. 선택된 숫자에 해당하는 Artifact 를 artifactList 에 추가한다
-    /// 3. gameState 를 GachaAnimation 으로 변경한다
+
+    /// 유물 가챠 버튼을 클릭할 때 호출됩니다.
     public void StartGacha() 
     {
+        /// 유물을 15개 모두 얻었거나, 프레스티지 포인트가 10보다 작으면 가챠를 시작할 수 없습니다.
         if(artifactList.Count == 15) return;
         if(prestigePoint < 10) return;
-        prestigePoint -= 10;
 
+        /// 프레스티지 포인트를 10 감소시키고, 가챠 팝업을 업데이트 합니다.
+        prestigePoint -= 10;
         Execute_UpdateGachaPopup = true;
 
+        /// 보유하지 않은 유물중에서 현재 단계에서 얻을 수 있는 유물을 랜덤으로 선택합니다.
         var rand = new System.Random();
-        
-
         int[] nums = new int[3];
         int[] alreadyHave = ArrayUtil.Select(artifactList.ToArray(), (x) => x.buffID);
         List<int> list = new List<int>();
@@ -338,13 +364,12 @@ public partial class ClickerTemp
             list.Add(target);
         }
 
-        /// select a random number from the list
         int random = list[rand.Next(list.Count)];
-        
         string methodName = $"GetArtifactBuff{random}";
         ArtifactData buffData = typeof(ArtifactData).GetMethod(methodName, BindingFlags.Public | BindingFlags.Static).Invoke(null, null) as ArtifactData;
         artifactList.Add(buffData);
-
+        
+        /// gameState 를 GachaAnimation 으로 변경합니다
         gameState = GameState.GachaAnimation;
         Execute_BlockUserInput = true;
         Execute_OnGachaAnimationStart = true;
@@ -353,6 +378,8 @@ public partial class ClickerTemp
  
 
 # region Prestige
+    /// 프레스티지 버튼을 클릭할 때 호출됩니다.
+    /// 프레스티지 포인트를 얻고, 애니메이션을 재생합니다.
     public void StartPrestige()
     {
         if(GetPrestigeReward() <= 0) return;
@@ -369,6 +396,9 @@ public partial class ClickerTemp
 
 # region TapUpgrade
 
+    /// 탭 업그레이드 버튼을 클릭할 때 호출됩니다.
+    /// 탭 레벨을 1 증가시키고, 골드를 감소시키고, 탭당 획득 골드를 증가시킵니다.
+    /// 이후 탭당 얻는 골드 텍스트와 골드 보유 텍스트, 업그레이드 버튼 색상을 업데이트 합니다.
     public void TapUpgrade()
     {
         if(gold >= tapUpgradeData.GetNextLevelCost())
@@ -384,12 +414,16 @@ public partial class ClickerTemp
         }
     }
 
+    /// 오토 탭 스킬 버튼을 클릭할 때 호출됩니다.
+    /// 오토 탭 스킬을 활성화 시키고, 스킬 버튼을 업데이트 합니다.
     public void Button_AutoTapSkill()
     {
         autoTapSkillData.ActivateSkill();
         Execute_UpdateTapUpgradeScroll = true;
     }
 
+    /// 탭당 보너스 스킬 버튼을 클릭할 때 호출됩니다.
+    /// 탭당 보너스 스킬을 활성화 시키고, 스킬 버튼을 업데이트 합니다.
     public void Button_BonusTapSkill()
     {
         bonusTapSkillData.ActivateSkill();
@@ -397,6 +431,8 @@ public partial class ClickerTemp
         Execute_UpdateTopCanvasGoldPerTapText = true;
     }
 
+    /// 초당 보너스 스킬 버튼을 클릭할 때 호출됩니다.
+    /// 초당 보너스 스킬을 활성화 시키고, 스킬 버튼을 업데이트 합니다.
     public void Button_BonusSecSkill()
     {
         bonusSecSkillData.ActivateSkill();
@@ -404,12 +440,16 @@ public partial class ClickerTemp
         Execute_UpdateTopCanvasGoldPerSecText = true;
     }
 
+    /// 쿨다운 스킬 버튼을 클릭할 때 호출됩니다.
+    /// 쿨다운 스킬을 활성화 시키고, 스킬 버튼을 업데이트 합니다.
     public void Button_CoolDownSkill()
     {
         coolDownSkillData.ActivateSkill(this);
         Execute_UpdateTapUpgradeScroll = true;
     }
 
+    /// 오토 탭 스킬 버튼을 업그레이드 할 때 호출됩니다.
+    /// 프레스티지 포인트 2를 소모하고, 오토 탭 스킬 레벨을 1 증가시킵니다.
     public void Button_AutoTapSkillUpgrade()
     {
         if(prestigePoint < 2) return;
@@ -418,6 +458,8 @@ public partial class ClickerTemp
         Execute_UpdateTapUpgradeScroll = true;
     }
 
+    /// 탭당 보너스 스킬 버튼을 업그레이드 할 때 호출됩니다.
+    /// 프레스티지 포인트 2를 소모하고, 탭당 보너스 스킬 레벨을 1 증가시킵니다.
     public void Button_BonusTapSkillUpgrade()
     {
         if(prestigePoint < 2) return;
@@ -426,6 +468,8 @@ public partial class ClickerTemp
         Execute_UpdateTapUpgradeScroll = true;
     }
 
+    /// 초당 보너스 스킬 버튼을 업그레이드 할 때 호출됩니다.
+    /// 프레스티지 포인트 2를 소모하고, 초당 보너스 스킬 레벨을 1 증가시킵니다.
     public void Button_BonusSecSkillUpgrade()
     {
         if(prestigePoint < 2) return;
@@ -434,6 +478,8 @@ public partial class ClickerTemp
         Execute_UpdateTapUpgradeScroll = true;
     }
 
+    /// 쿨다운 스킬 버튼을 업그레이드 할 때 호출됩니다.
+    /// 프레스티지 포인트 2를 소모하고, 쿨다운 스킬 레벨을 1 증가시킵니다.
     public void Button_CoolDownSkillUpgrade()
     {
         if(coolDownSkillData.GetLevel() >= 100) return;
@@ -448,6 +494,9 @@ public partial class ClickerTemp
 
 # region SecUpgrade
 
+    /// 초당 골드 획득 업그레이드 버튼을 클릭할 때 호출됩니다.
+    /// 항목에 맞는 업그레이드 레벨을 1 증가시키고, 골드를 감소시키고, 초당 획득 골드를 증가시킵니다.
+    /// 이후 초당 얻는 골드 텍스트와 골드 보유 텍스트, 업그레이드 버튼 색상을 업데이트 합니다.
     public void SecUpgrade(int index)
     {
         if(gold >= secUpgradeList[index].GetNextLevelCost())
@@ -467,6 +516,9 @@ public partial class ClickerTemp
 
 # region Challenge
 
+    /// 보유 골드 도전과제 버튼을 클릭할 때 호출됩니다.
+    /// 보상으로 프레스티지 포인트를 획득하고, 도전과제를 다음 레벨로 변경합니다.
+    /// 이후 도전과제 스크롤을 업데이트 합니다.
     public void Achieve_Challenge_HoldGold()
     {
         int Challenge_HoldGold_Target = (int)Math.Pow(10, challenge_HoldGold_Level * 2 + 5);
@@ -480,7 +532,9 @@ public partial class ClickerTemp
         }
     }
 
-
+    /// 탭당 골드 도전과제 버튼을 클릭할 때 호출됩니다.
+    /// 보상으로 프레스티지 포인트를 획득하고, 도전과제를 다음 레벨로 변경합니다.
+    /// 이후 도전과제 스크롤을 업데이트 합니다.
     public void Achieve_Challenge_GoldPerTap()
     {
         int Challenge_GoldPerTap_Target = (int)Math.Pow(10, challenge_GoldPerTap_Level * 2 + 2);
@@ -494,7 +548,9 @@ public partial class ClickerTemp
         }
     }
 
-
+    /// 초당 골드 도전과제 버튼을 클릭할 때 호출됩니다.
+    /// 보상으로 프레스티지 포인트를 획득하고, 도전과제를 다음 레벨로 변경합니다.
+    /// 이후 도전과제 스크롤을 업데이트 합니다.
     public void Achieve_Challenge_GoldPerSec()
     {
         int Challenge_GoldPerSec_Target = (int)Math.Pow(10, challenge_GoldPerSec_Level * 2 + 2);
@@ -508,7 +564,9 @@ public partial class ClickerTemp
         }
     }
 
-    
+    /// 광고 시청 도전과제 버튼을 클릭할 때 호출됩니다.
+    /// 보상으로 프레스티지 포인트를 획득하고, 도전과제를 다음 레벨로 변경합니다.
+    /// 이후 도전과제 스크롤을 업데이트 합니다.    
     public void Achieve_Challenge_AdCount()
     {
         int Challenge_AdCount_Target = challenge_AdCount_Level * 5 + 5;
@@ -522,7 +580,9 @@ public partial class ClickerTemp
         }
     }
 
-
+    /// 게임 플레이 시간 도전과제 버튼을 클릭할 때 호출됩니다.
+    /// 보상으로 프레스티지 포인트를 획득하고, 도전과제를 다음 레벨로 변경합니다.
+    /// 이후 도전과제 스크롤을 업데이트 합니다.
     public void Achieve_Challenge_PlayTime()
     {
         int Challenge_PlayTime_Target = challenge_PlayTime_Level * 1000 + 500;
@@ -536,7 +596,9 @@ public partial class ClickerTemp
         }
     }
 
-
+    /// 탭 횟수 도전과제 버튼을 클릭할 때 호출됩니다.
+    /// 보상으로 프레스티지 포인트를 획득하고, 도전과제를 다음 레벨로 변경합니다.
+    /// 이후 도전과제 스크롤을 업데이트 합니다.
     public void Achieve_Challenge_TapCount()
     {
         int Challenge_TapCount_Target = challenge_TapCount_Level * 500 + 500;
@@ -550,7 +612,9 @@ public partial class ClickerTemp
         }
     }
 
-
+    /// 프레스티지 횟수 도전과제 버튼을 클릭할 때 호출됩니다.
+    /// 보상으로 프레스티지 포인트를 획득하고, 도전과제를 다음 레벨로 변경합니다.
+    /// 이후 도전과제 스크롤을 업데이트 합니다.
     public void Achieve_Challenge_PrestigeCount()
     {
         int Challenge_PrestigeCount_Target = challenge_PrestigeCount_Level * 3 + 3;
@@ -564,7 +628,9 @@ public partial class ClickerTemp
         }
     }
 
-
+    /// 유물 획득 도전과제 버튼을 클릭할 때 호출됩니다.
+    /// 보상으로 프레스티지 포인트를 획득하고, 도전과제를 다음 레벨로 변경합니다.
+    /// 이후 도전과제 스크롤을 업데이트 합니다.
     public void Achieve_Challenge_ArtifactCount()
     {
         int Challenge_ArtifactCount_Target = challenge_ArtifactCount_Level * 3 + 3;
@@ -582,6 +648,8 @@ public partial class ClickerTemp
 
 # region Returning
 
+    /// 미접속 보상 버튼을 클릭할 때 호출됩니다.
+    /// 미접속 보상 팝업을 닫고, 골드를 획득합니다.
     public void Returning_GetReward()
     {
         gold += returningRewardGold;
@@ -592,6 +660,8 @@ public partial class ClickerTemp
         SaveData();
     }
 
+    /// 미접속 보상 10배 버튼을 클릭할 때 호출됩니다.
+    /// 광고가 종료되면 미접속 보상 팝업을 닫고, 골드를 획득합니다.
     public void Returning_GetReward10X()
     {
         RewardAdRequest.ShowAd(
@@ -618,6 +688,8 @@ public partial class ClickerTemp
 
 #region Special Bonus
 
+    /// 광고를 시청하고 골드를 얻는 버튼을 클릭할 때 호출됩니다.
+    /// 광고가 종료되면 광고 시청으로 인한 골드 획득 팝업을 닫고, 골드를 획득합니다.
     public void ShowSpecialBonusAd()
     {
         RewardAdRequest.ShowAd(

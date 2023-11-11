@@ -1,7 +1,14 @@
 using UnityEngine;
 
+/// 이 cs파일은 상단 UI를 관리합니다.
 public partial class ClickerTemp
 {
+
+    /// === 실행 조건 ===
+    /// 1. 게임이 시작되었을때
+    /// 2. 탭당 얻는 골드가 변경되었을때 (업그레이드, 아티팩트, 버프)
+    /// === 실행 내용 ===
+    /// 1. 탭당 얻는 골드 텍스트를 데이터에 맞게 업데이트
     private void UpdateTopCanvasGoldPerTapText()
     {
         if(Execute_UpdateTopCanvasGoldPerTapText)
@@ -12,6 +19,11 @@ public partial class ClickerTemp
         }
     }
 
+    /// === 실행 조건 ===
+    /// 1. 게임이 시작되었을때
+    /// 2. 초당 얻는 골드가 변경되었을때 (업그레이드, 아티팩트, 버프)
+    /// === 실행 내용 ===
+    /// 1. 초당 얻는 골드 텍스트를 데이터에 맞게 업데이트
     private void UpdateTopCanvasGoldPerSecText()
     {
         if(Execute_UpdateTopCanvasGoldPerSecText)
@@ -22,6 +34,11 @@ public partial class ClickerTemp
         }
     }
 
+    /// === 실행 조건 ===
+    /// 1. 게임이 시작되었을때
+    /// 2. 보유한 골드가 변경되었을때
+    /// === 실행 내용 ===
+    /// 1. 보유한 골드 텍스트를 데이터에 맞게 업데이트
     private void UpdateTopCanvasGoldText()
     {
         if(Execute_UpdateTopCanvasGoldText)
@@ -32,6 +49,11 @@ public partial class ClickerTemp
         }
     }
 
+    /// === 실행 조건 ===
+    /// 1. 게임이 시작되었을때
+    /// 2. 탭 버프의 남은 시간이 변경되었을때
+    /// === 실행 내용 ===
+    /// 1. 탭 버프 남은시간 텍스트를 데이터에 맞게 업데이트
     private void UpdateTopCanvasTapTempBuffBtn()
     {
         if(!Execute_UpdateTopCanvasTapTempBuffBtn) return;
@@ -45,6 +67,11 @@ public partial class ClickerTemp
         Execute_UpdateTopCanvasTapTempBuffBtn = false;
     }
 
+    /// === 실행 조건 ===
+    /// 1. 게임이 시작되었을때
+    /// 2. 초당 버프의 남은 시간이 변경되었을때
+    /// === 실행 내용 ===
+    /// 1. 초당 버프 남은시간 텍스트를 데이터에 맞게 업데이트
     private void UpdateTopCanvasSecTempBuffBtn()
     {
         if(!Execute_UpdateTopCanvasSecTempBuffBtn) return;
@@ -58,6 +85,11 @@ public partial class ClickerTemp
         Execute_UpdateTopCanvasSecTempBuffBtn = false;
     }
 
+    /// === 실행 조건 ===
+    /// 1. 게임이 시작되었을때
+    /// 2. 볼륨 On/Off 버튼을 눌렀을때
+    /// === 실행 내용 ===
+    /// 1. 볼륨 On/Off 버튼의 이미지를 볼륨상태에 맞게 업데이트
     private void UpdateTopCanvasVolumeBtn()
     {
         if(!Execute_UpdateTopCanvasVolumeBtn) return;

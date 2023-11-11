@@ -1,8 +1,14 @@
 using Unity.Mathematics;
 using UnityEngine;
 
+/// 이 cs파일은 유저가 탭을 하는 영역에 해당하는 UI를 관리합니다. 
 public partial class ClickerTemp
 {
+    /// === 실행 조건 ===
+    /// 1. 활성화된 터치 이펙트가 존재할때
+    /// === 실행 내용 ===
+    /// 1. 터치 이펙트를 위로 이동시키고 투명도를 낮춤
+    /// 2. 투명도가 0이 되면 터치 이펙트를 비활성화
     private void UpdateMidCanvasTouchEffect()
     {
         if(!Execute_UpdateMidCanvasTouchEffect) return;
@@ -25,6 +31,13 @@ public partial class ClickerTemp
         }
     }
 
+
+    /// === 실행 조건 ===
+    /// 1. 탭/초당 얻는 골드가 지정된 값을 넘어서 배경 이미지가 전환될때
+    /// 2. 게임을 시작해서 탭/초당 얻는 골드에 맞는 배경 이미지가 활성화될때
+    /// === 실행 내용 ===
+    /// 1. 현재 활성화된 배경 이미지를 페이드 아웃
+    /// 2. 탭/초당 얻는 골드에 맞는 배경 이미지를 페이드 인
     private void UpdateMidCanvasArtAnimation()
     {
         if(!Execute_UpdateMidCanvasArtAnimation) return;
@@ -57,17 +70,16 @@ public partial class ClickerTemp
         }
     }
 
+
+    /// === 실행 조건 ===
+    /// 1. 3분마다 발생하는 특별 보상(광고시청) 이벤트가 활성화 될때 
+    /// === 실행 내용 ===
+    /// 1. 특별 보상(광고시청) 오브젝트를 랜덤한 위치에 활성화하고 애니메이션을 재생
+    /// 2. 15초 후 애니메이션을 정지하고 오브젝트를 비활성화
     private void UpdateMidCanvasSpecialBonus()
     {
         if(!Execute_UpdateMidCanvasSpecialBonus) return;
         Execute_UpdateMidCanvasSpecialBonus = false;
-
-        if(lastSec % 300 == 45 && midCanvas_SpecialBonus.gameObjectData.GetEnabled())
-        {
-            midCanvas_SpecialBonus_Button.animationData.SetCurrentState("IDLE");
-            midCanvas_SpecialBonus.gameObjectData.SetEnabled(false);
-            return;
-        }
 
         if(lastSec % 300 == 30 && !midCanvas_SpecialBonus.gameObjectData.GetEnabled() && RewardAdRequest.CanShowAd())
         {
@@ -77,6 +89,13 @@ public partial class ClickerTemp
 
             float2 pos = new float2(random.Next(-400, 400), random.Next(-300, 300));
             midCanvas_SpecialBonus.rectTransformData.SetAnchoredPos(pos);
+            return;
+        }
+
+        if(lastSec % 300 == 45 && midCanvas_SpecialBonus.gameObjectData.GetEnabled())
+        {
+            midCanvas_SpecialBonus_Button.animationData.SetCurrentState("IDLE");
+            midCanvas_SpecialBonus.gameObjectData.SetEnabled(false);
             return;
         }
     }

@@ -1,12 +1,20 @@
 using UnityEngine;
 
+/// 이 cs파일은 탭 업그레이드 스크롤의 UI를 관리합니다.
 public partial class ClickerTemp
 {
+    /// === 실행 조건 ===
+    /// 1. 탭 업그레이드 스크롤이 활성화되었을때
+    /// === 실행 내용 ===
+    /// 1. 탭 업그레이드 항목의 업그레이드 설명을 업데이트하고, 소유 골드와 비용을 비교해 버튼 색상을 변경
+    /// 2. 스킬 업그레이드 항목의 업그레이드 설명을 업데이트하고, 소유 프레스티지 포인트와 비용을 비교해 버튼 색상을 변경
+    /// 3. 스킬의 남은 시간을 표시하고, 쿨타임이 끝나면 버튼 색상을 변경
     private void UpdateTapUpgradeScroll()
     {
         if(!Execute_UpdateTapUpgradeScroll) return;
         Execute_UpdateTapUpgradeScroll = false;
 
+        // 탭 업그레이드 연동
         Color color = (gold >= tapUpgradeData.GetNextLevelCost()) ? new Color(0.5f, 0.9f, 0.5f, 1) : Color.gray;
         string numericalText_CurrentLevelEffect = tapUpgradeData.GetCurrentLevelEffect() < 1000000 ? tapUpgradeData.GetCurrentLevelEffect().ToString("N0") : tapUpgradeData.GetCurrentLevelEffect().ToString("0.000e0");
         string numericalText_NextLevelEffect = tapUpgradeData.GetNextLevelEffect() < 1000000 ? tapUpgradeData.GetNextLevelEffect().ToString("N0") : tapUpgradeData.GetNextLevelEffect().ToString("0.000e0");

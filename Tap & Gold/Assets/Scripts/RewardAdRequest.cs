@@ -20,7 +20,6 @@ public class RewardAdRequest : MonoBehaviour
     }
     void Start()
     {
-
         MobileAds.Initialize((InitializationStatus initStatus) =>
         {
         	//초기화 완료
@@ -37,34 +36,34 @@ public class RewardAdRequest : MonoBehaviour
         LoadRewardedInterstitialAd();
     }
 
-  public void LoadRewardedInterstitialAd()
-  {
-      if (rewardedInterstitialAd != null)
-      {
-            rewardedInterstitialAd.Destroy();
-            rewardedInterstitialAd = null;
-      }
+    public void LoadRewardedInterstitialAd()
+    {
+        if (rewardedInterstitialAd != null)
+        {
+                rewardedInterstitialAd.Destroy();
+                rewardedInterstitialAd = null;
+        }
 
-      Debug.Log("Loading the rewarded interstitial ad.");
-      
+        Debug.Log("Loading the rewarded interstitial ad.");
+        
 
-      var adRequest = new AdRequest();
-      RewardedInterstitialAd.Load(adUnitId, adRequest,
-          (RewardedInterstitialAd ad, LoadAdError error) =>
-          {
-              if (error != null || ad == null)
-              {
-                  Debug.LogError("rewarded interstitial ad failed to load an ad " +
-                                 "with error : " + error);
-                  return;
-              }
+        var adRequest = new AdRequest();
+        RewardedInterstitialAd.Load(adUnitId, adRequest,
+            (RewardedInterstitialAd ad, LoadAdError error) =>
+            {
+                if (error != null || ad == null)
+                {
+                    Debug.LogError("rewarded interstitial ad failed to load an ad " +
+                                    "with error : " + error);
+                    return;
+                }
 
-              Debug.Log("Rewarded interstitial ad loaded with response : "
-                        + ad.GetResponseInfo());
+                Debug.Log("Rewarded interstitial ad loaded with response : "
+                            + ad.GetResponseInfo());
 
-              rewardedInterstitialAd = ad;
-          });
-  }
+                rewardedInterstitialAd = ad;
+            });
+    }
 
     public static void ShowAd(Action beforeAction, Action rewardAction, Action afterAction) //광고 보기
     {

@@ -1,21 +1,20 @@
 using UnityEngine;
 
+/// 이 cs파일은 아티팩트 스크롤의 UI를 관리합니다.
 public partial class ClickerTemp
 {
-    private void UpdateSpecialTokenText()
+    /// 현재 보유한 프레스티지 포인트를 표시하는 텍스트를 업데이트 합니다.
+    private void UpdatePrestigePointText()
     {
-        if(Execute_UpdateSpecialTokenText)
+        if(Execute_UpdatePrestigePointText)
         {
             artifact_prestigePointText.textData.SetText($"<sprite=0> {prestigePoint}");
-            Execute_UpdateSpecialTokenText = false;
+            Execute_UpdatePrestigePointText = false;
         }
     }
 
-    /// === 실행 조건 ===
-    /// 1. 게임 시작시
-    /// 2. State 가 GachaAnimation -> Normal 로 변경될때
-    /// === 실행 내용 ===
-    /// 1. artifactList 에 있는 모든 버프를 화면에 표시한다
+    /// 게임 시작시 또는 State 가 GachaAnimation -> Normal 로 변경될때 실행됩니다.
+    /// 아티팩트 스크롤에 표시되는 보유 아티팩트 항목을 적절한 위치에 배치합니다.
     private void UpdateArtifactScroll()
     {
         if(Execute_UpdateArtifactScroll)

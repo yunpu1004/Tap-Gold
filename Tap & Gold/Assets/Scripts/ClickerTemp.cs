@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using static Unity.Mathematics.math;
+
+/// 이 cs파일은 게임의 데이터, 업데이트 흐름을 관리합니다.
+/// 게임에 필요한 모든 객체, 데이터, 플래그 등은 이 파일에 선언되어 있습니다.
 public partial class ClickerTemp : MonoBehaviour
 {
     public bool loadSavedData = true;
@@ -131,6 +134,7 @@ public partial class ClickerTemp : MonoBehaviour
 
     /// 데이터 목록
     #region Data
+
     public const float returningRewardRate = 0.03f;
 
     public (GameState before, GameState current) _gameState;
@@ -166,6 +170,13 @@ public partial class ClickerTemp : MonoBehaviour
     }
     
 
+    /// 1초마다 1씩 증가하는 변수입니다.
+    /// 값이 변경될때마다 아래의 작업을 합니다.
+    ///     1. 총 플레이 시간을 1초 증가
+    ///     2. 초당 얻는 골드를 획득
+    ///     3. 모든 버프, 스킬의 지속시간과 쿨타임을 1초 감소
+    ///     4. 변경된 데이터에 대한 UI 업데이트
+    ///     5. 5분마다 광고 보상 팝업을 활성화
     public int _lastSec;
     public int lastSec
     {
@@ -211,6 +222,9 @@ public partial class ClickerTemp : MonoBehaviour
 
     public double returningRewardGold;
 
+
+    /// 플레이어가 화면을 터치할때마다 실제로 얻는 골드입니다.
+    /// 탭당 기본 골드 획득량에 버프, 스킬, 아티팩트 등의 보너스를 적용한 값입니다.
     public double realGoldPerTap
     {
         get
@@ -229,6 +243,8 @@ public partial class ClickerTemp : MonoBehaviour
         }
     }
 
+    /// 플레이어의 탭당 기본 골드 획득량입니다.
+    /// 업그레이드로 인하여 이 값이 변경될때마다 관련된 UI를 업데이트 합니다.
     public double _defaultGoldPerTap;
     public double defaultGoldPerTap
     {
@@ -244,7 +260,8 @@ public partial class ClickerTemp : MonoBehaviour
         }
     }
 
-
+    /// 플레이어가 1초마다 실제로 얻는 골드입니다.
+    /// 초당 기본 골드 획득량에 버프, 스킬, 아티팩트 등의 보너스를 적용한 값입니다.
     public double realGoldPerSec
     {
         get
@@ -263,6 +280,9 @@ public partial class ClickerTemp : MonoBehaviour
         }
     }
 
+
+    /// 플레이어의 초당 기본 골드 획득량입니다.
+    /// 업그레이드로 인하여 이 값이 변경될때마다 관련된 UI를 업데이트 합니다.
     public double _defaultGoldPerSec;
     public double defaultGoldPerSec
     {
@@ -278,6 +298,9 @@ public partial class ClickerTemp : MonoBehaviour
         }
     }
 
+
+    /// 플레이어가 보유한 골드입니다.
+    /// 골드가 변경될때마다 관련된 UI를 업데이트 합니다.
     public double _gold;
     public double gold
     {
@@ -293,6 +316,9 @@ public partial class ClickerTemp : MonoBehaviour
         }
     }
 
+
+    /// 플레이어의 볼륨 설정입니다.
+    /// 볼륨 설정이 변경될때마다 볼륨 아이콘을 업데이트 합니다.
     public bool _volumeOn;
     public bool volumeOn
     {
@@ -305,6 +331,9 @@ public partial class ClickerTemp : MonoBehaviour
         }
     }
 
+
+    /// 플레이어의 프레스티지 포인트입니다.
+    /// 프레스티지 포인트가 변경될때마다 관련된 UI를 업데이트 합니다.
     public int _prestigePoint;
     public int prestigePoint
     {
@@ -312,7 +341,7 @@ public partial class ClickerTemp : MonoBehaviour
         set
         {
             if(value == _prestigePoint) return;
-            Execute_UpdateSpecialTokenText = true;
+            Execute_UpdatePrestigePointText = true;
             Execute_UpdateChallengeNotifyMark = true;
             _prestigePoint = value;
         }
@@ -433,7 +462,7 @@ public partial class ClickerTemp : MonoBehaviour
     #region Execute_Boolean
     private bool Execute_AllowUserInput = false;
     private bool Execute_BlockUserInput = false;
-    private bool Execute_UpdateSpecialTokenText = false;
+    private bool Execute_UpdatePrestigePointText = false;
     private bool Execute_UpdatePrestigeRewardText = false;
     private bool Execute_UpdateSecUpgradeScroll = false;
     private bool Execute_UpdateTapUpgradeScroll = false;
@@ -458,12 +487,16 @@ public partial class ClickerTemp : MonoBehaviour
     #endregion
 
 
+    /// 배경이미지 전환용 데이터 목록
     #region Effect Data
     private double[] midCanvasArtTiming = {1, 1e4, 1e12, 1e20, 1e28, 1e36, 1e44, 1e52};
     private List<Vector2> tap_normalizedPosList  = new List<Vector2>();
     #endregion
 
 
+
+    /// 이 게임의 메인 업데이트 함수입니다.
+    /// GameState -> ScrollState -> PopupState 순으로 업데이트를 진행합니다.
     void Update()
     {
         UpdateGameState();
@@ -473,13 +506,16 @@ public partial class ClickerTemp : MonoBehaviour
     }
 
 
+    /// GameState 업데이트 함수입니다.
     private void UpdateGameState()
     {
         var before = _gameState.before;
         var current = _gameState.current;
 
+        /// 게임 상태가 노말일때
         if(current == GameState.Normal)
         {
+            /// 스킬의 지속시간 및 쿨타임을 감소시키고, 탭 이펙트를 업데이트 합니다.
             if(before == GameState.Normal)
             {
                 autoTapSkillData.UpdateData(this);
@@ -492,24 +528,30 @@ public partial class ClickerTemp : MonoBehaviour
         }
 
 
+        /// 게임 상태가 프레스티지 애니메이션일때
         else if(current == GameState.PrestigeAnimation)
         {
+            /// 프레스티지 애니메이션이 재생중일때
             if(before == GameState.PrestigeAnimation)
             {
+                /// 프레스티지 애니메이션이 종료되어서 IDLE 상태가 되었는지 확인
                 if(anim_Prestige.animationData.GetCurrentStateChanged() && anim_Prestige.animationData.IsIDLE())
                 {
+                    /// 프레스티지 애니메이션을 비활성화하고, 프레스티지 포인트를 획득합니다.
                     anim.SetDisplay(false);
                     prestigePoint += GetPrestigeReward();
+
+                    /// 버프, 업그레이드, 보유골드를 초기화하고 게임 상태를 노말로 변경합니다.
                     secTempBuffData.SetRemainedTime(0);
                     tapTempBuffData.SetRemainedTime(0);
-
                     defaultGoldPerTap = 1;
                     defaultGoldPerSec = 5;
                     gold = 0;
-
                     tapUpgradeData = UpgradeData.GetTapUpgradeData();
                     secUpgradeList = UpgradeData.GetSecUpgradeList();
+                    gameState = GameState.Normal;
 
+                    /// 관련 UI를 업데이트 합니다.
                     Execute_UpdateTopCanvasSecTempBuffBtn = true;
                     Execute_UpdateTopCanvasTapTempBuffBtn = true;
                     Execute_UpdateTopCanvasGoldPerSecText = true;
@@ -519,18 +561,23 @@ public partial class ClickerTemp : MonoBehaviour
                     Execute_UpdateTapUpgradeScroll = true;
                     Execute_UpdateSecUpgradeScroll = true;
                     Execute_UpdateMidCanvasArtAnimation = true;
-                    gameState = GameState.Normal;
+                    
                 }
             }
         }
 
 
+        /// 게임 상태가 가챠 애니메이션일때
         else if(current == GameState.GachaAnimation)
         {
+            /// 가챠 애니메이션이 재생중일때
             if(before == GameState.GachaAnimation)
             {
-                if(gacha_AnimImage.animationData.IsIDLE()) // 애니메이션 종료 조건
+                /// 가챠 애니메이션이 종료되어서 IDLE 상태가 되었는지 확인
+                if(gacha_AnimImage.animationData.IsIDLE()) 
                 {
+                    /// 게임 상태를 노말로 변경하고, 관련 UI를 업데이트 합니다.
+                    gameState = GameState.Normal;
                     Execute_AllowUserInput = true;
                     Execute_OnGachaAnimationEnd = true;
                     Execute_UpdateArtifactScroll = true;
@@ -539,7 +586,6 @@ public partial class ClickerTemp : MonoBehaviour
                     Execute_UpdateTopCanvasGoldPerTapText = true;
                     Execute_UpdateTopCanvasGoldPerSecText = true;
                     Execute_UpdateTopCanvasGoldPerTapText = true;
-                    gameState = GameState.Normal;
                 }
             }
         }
@@ -550,28 +596,31 @@ public partial class ClickerTemp : MonoBehaviour
             
         }
 
-
+        /// 현재 프레임의 GameState 를 기록합니다. 
         _gameState.before = _gameState.current;
     }
 
 
+
+    /// ScrollState 업데이트 함수입니다.
     private void UpdateScrollState()
     {
         var before = _scrollState.before;
         var current = _scrollState.current;
 
+        /// 탭 업그레이드 스크롤이 활성화 되있으면 탭 업그레이드 스크롤을 업데이트 합니다.
         if(current == ScrollState.TapUpgrade)
         {
             Execute_UpdateTapUpgradeScroll = true;
         }
 
-
+        /// 초당 업그레이드 스크롤이 활성화 되있으면 초당 업그레이드 스크롤을 업데이트 합니다.
         else if(current == ScrollState.SecUpgrade)
         {
             Execute_UpdateSecUpgradeScroll = true;
         }
 
-
+        
         else if(current == ScrollState.Artifact)
         {
             if(before == ScrollState.Artifact)
@@ -599,6 +648,8 @@ public partial class ClickerTemp : MonoBehaviour
     }
 
 
+
+    /// PopupState 업데이트 함수입니다.
     private void UpdatePopupState()
     {
         var before = _popupState.before;
@@ -637,12 +688,14 @@ public partial class ClickerTemp : MonoBehaviour
     }
 
 
+    /// 게임의 데이터를 저장합니다.
     private void SaveData()
     {
         PlayerSavedData.SavePlayerData(this);
     }
 
 
+    /// 프레스티지 보상을 계산합니다.
     private int GetPrestigeReward()
     {
         int log = (int)(log10(defaultGoldPerTap + defaultGoldPerSec) / 2);
@@ -652,6 +705,11 @@ public partial class ClickerTemp : MonoBehaviour
         return reward;
     }
 
+
+
+    /// 탭 이펙트는 플레이어가 화면을 터치할때마다 실행됩니다.
+    /// 이펙트 오브젝트중 비활성화된 오브젝트를 활성화하고, 터치한 위치에 이펙트를 생성합니다.
+    /// 생성된 이펙트는 MidCanvasEvent.cs 의 UpdateMidCanvasTouchEffect() 에서 업데이트 됩니다.
     private void StartTapEffect()
     {
         int count = tap_normalizedPosList.Count;

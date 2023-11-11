@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+/// 이 cs파일은 도전과제 스크롤의 UI를 관리합니다.
 public partial class ClickerTemp
 {
  
@@ -10,9 +11,9 @@ public partial class ClickerTemp
     /// 3. 도전과제 달성 버튼을 눌러서 다음 레벨의 도전과제로 넘어갈때
     /// 4. 게임을 시작할때
     /// === 실행 내용 ===
-    /// 1. 각 도전과제의 달성 여부를 확인한다
-    /// 2. 만약 하나라도 달성되었다면 도전과제의 달성을 알려주는 UI를 활성화 시킨다
-    /// 3. 달성한 도전과제가 없다면 UI를 비활성화 시킨다
+    /// 1. 각 도전과제의 달성 여부를 확인
+    /// 2. 만약 하나라도 달성되었다면 도전과제의 달성을 알려주는 UI를 활성화
+    /// 3. 달성한 도전과제가 없다면 UI를 비활성화
     private void UpdateChallengeScroll()
     {
         if(!Execute_UpdateChallengeScroll) return;

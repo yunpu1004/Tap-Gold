@@ -1,5 +1,11 @@
+/// 이 cs 파일은 통계 스크롤의 UI를 관리합니다.
 public partial class ClickerTemp
 {
+
+    /// === 실행 조건 ===
+    /// 1. 통계 스크롤이 활성화되었을때
+    /// === 실행 내용 ===
+    /// 1. 통계 스크롤의 텍스트를 업데이트
     private void UpdateStatisticsScroll()
     {
         if(!Execute_UpdateStatisticsScroll) return;

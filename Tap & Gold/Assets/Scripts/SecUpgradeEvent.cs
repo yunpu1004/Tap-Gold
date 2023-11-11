@@ -1,7 +1,13 @@
 using UnityEngine;
 
+/// 이 cs파일은 초당 골드 업그레이드 스크롤의 UI를 관리합니다.
 public partial class ClickerTemp
 {
+    /// === 실행 조건 ===
+    /// 1. 초당 골드 업그레이드 스크롤이 활성화되었을때
+    /// === 실행 내용 ===
+    /// 1. 초당 골드 업그레이드 스크롤의 각 업그레이드 설명 텍스트와 비용 텍스트를 업데이트
+    /// 2. 초당 골드 업그레이드 스크롤의 각 업그레이드 버튼의 색상을 업데이트
     private void UpdateSecUpgradeScroll()
     {
         if(!Execute_UpdateSecUpgradeScroll) return;

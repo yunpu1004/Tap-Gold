@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+/// 이 클래스는 탭당 또는 초당 골드 획득 업그레이드 데이터를 관리합니다.
 [System.Serializable]
 public class UpgradeData
 {
@@ -17,47 +18,46 @@ public class UpgradeData
         this.level = level;
     }
 
+
+    /// 현재 레벨의 효과를 반환합니다.
     public double GetCurrentLevelEffect()
     {
         if(level == 0) return 0;
         return Math.Truncate(defaultEffect * Math.Pow(1.2, level - 1) + level - 1);
     }
 
+    /// 다음 레벨의 효과를 반환합니다.
     public double GetNextLevelEffect()
     {
         return Math.Truncate(defaultEffect * Math.Pow(1.2, level) + level);
     }
 
+    /// 다음 레벨의 비용을 반환합니다.
     public double GetNextLevelCost()
     {
         return Math.Truncate(defaultCost * Math.Pow(1.2, level));
     }
 
-
+    /// 탭당 골드 획득 업그레이드 객체를 생성합니다.
     public static UpgradeData GetTapUpgradeData()
     {
         return new UpgradeData("Tap Upgrade", 1e0, 1e1, 1);
     }
 
+    /// 초당 골드 획득 업그레이드 객체 리스트를 생성합니다.
     public static UpgradeData[] GetSecUpgradeList()
     {
         var array = new UpgradeData[15];
 
-        array[0] = new UpgradeData("Sec Upgrade A", 5e0, 1e1, 1);
-        array[1] = new UpgradeData("Sec Upgrade B", 5e3, 1e4);
-        array[2] = new UpgradeData("Sec Upgrade C", 5e6, 1e7);
-        array[3] = new UpgradeData("Sec Upgrade D", 5e9, 1e10);
-        array[4] = new UpgradeData("Sec Upgrade E", 5e12, 1e13);
-        array[5] = new UpgradeData("Sec Upgrade F", 5e15, 1e16);
-        array[6] = new UpgradeData("Sec Upgrade G", 5e18, 1e19);
-        array[7] = new UpgradeData("Sec Upgrade H", 5e21, 1e22);
-        array[8] = new UpgradeData("Sec Upgrade I", 5e24, 1e25);
-        array[9] = new UpgradeData("Sec Upgrade J", 5e27, 1e28);
-        array[10] = new UpgradeData("Sec Upgrade K", 5e30, 1e31);
-        array[11] = new UpgradeData("Sec Upgrade L", 5e33, 1e34);
-        array[12] = new UpgradeData("Sec Upgrade M", 5e36, 1e37);
-        array[13] = new UpgradeData("Sec Upgrade N", 5e39, 1e40);
-        array[14] = new UpgradeData("Sec Upgrade O", 5e42, 1e43);
+        for (int i = 0; i < array.Length; i++)
+        {
+            char upgradeLetter = (char)('A' + i);
+            double effect = 5 * Math.Pow(10, i * 3);
+            double cost = effect * 2;
+            int level = (i == 0) ? 1 : 0;
+
+            array[i] = new UpgradeData($"Sec Upgrade {upgradeLetter}", effect, cost, level);
+        }
 
         return array;
     }

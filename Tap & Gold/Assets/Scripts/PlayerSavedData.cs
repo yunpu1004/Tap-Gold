@@ -1,6 +1,8 @@
 using System;
 using UnityEngine;
 
+
+/// 이 클래스는 플레이어의 게임 데이터를 관리합니다.
 [System.Serializable]
 public class PlayerSavedData
 {
@@ -36,7 +38,7 @@ public class PlayerSavedData
 
 
 
-
+    /// 기본 게임 데이터를 생성합니다.
     public static PlayerSavedData CreateDefaultInstance()
     {
         bool[] artifactList = new bool[15];
@@ -80,6 +82,7 @@ public class PlayerSavedData
 
 
 
+    /// 현재 게임 데이터를 저장합니다.
     public static void SavePlayerData(ClickerTemp instance)
     {
         bool[] artifactList = new bool[15];
@@ -136,6 +139,8 @@ public class PlayerSavedData
     }
     
 
+
+    /// 저장된 게임 데이터를 불러옵니다.
     public static PlayerSavedData LoadPlayerData()
     {
         try
@@ -151,6 +156,8 @@ public class PlayerSavedData
     }
 
 
+
+    /// 게임 데이터가 비정상적인지 확인합니다.
     private static bool CheckValidation(PlayerSavedData data)
     {
         if(data.tapUpgradeData == null)
