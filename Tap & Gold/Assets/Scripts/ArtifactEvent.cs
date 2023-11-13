@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// 이 cs파일은 아티팩트 스크롤의 UI를 관리합니다.
-public partial class ClickerTemp
+public partial class Tap_N_Gold
 {
     /// 현재 보유한 프레스티지 포인트를 표시하는 텍스트를 업데이트 합니다.
     private void UpdatePrestigePointText()

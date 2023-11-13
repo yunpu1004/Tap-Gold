@@ -4,14 +4,14 @@ using UnityEngine;
 
 
 /// 이 cs파일은 게임을 시작할때 실행되는 모든 초기화 작업을 관리합니다.
-public partial class ClickerTemp
+public partial class Tap_N_Gold
 {
     /// 게임을 시작할때 실행되는 모든 초기화 작업을 실행합니다.
     /// [LateInitialize]에 대해서는 HYP/Control & Update/InitializerManager.cs 를 참고하십시오.
     [LateInitialize]
     public static void Init()
     {
-        var instance = GameObject.FindObjectOfType<ClickerTemp>();
+        var instance = GameObject.FindObjectOfType<Tap_N_Gold>();
         SetAllData(instance);
         SetAllField(instance);
         SetAllEventData(instance);
@@ -19,8 +19,8 @@ public partial class ClickerTemp
     }
 
 
-    /// ClickerTemp.cs 의 모든 오브젝트를 찾아서 필드에 저장합니다.
-    private static void SetAllField(ClickerTemp instance)
+    /// Tap_N_Gold.cs 의 모든 오브젝트를 찾아서 필드에 저장합니다.
+    private static void SetAllField(Tap_N_Gold instance)
     {
         // InputBlocker
         instance.inputBlocker = ComponentManager.GetComponent<SimpleCanvas>("InputBlocker");
@@ -226,9 +226,9 @@ public partial class ClickerTemp
     }
 
 
-    /// ClickerTemp.cs 의 모든 데이터를 초기화합니다.
+    /// Tap_N_Gold.cs 의 모든 데이터를 초기화합니다.
     /// 저장된 데이터가 있다면 저장된 데이터를 불러오고, 없다면 기본 데이터를 생성합니다.
-    private static void SetAllData(ClickerTemp instance)
+    private static void SetAllData(Tap_N_Gold instance)
     {
         /// 게임 데이터 초기화
         var saveData = (instance.loadSavedData) ?PlayerSavedData.LoadPlayerData() : PlayerSavedData.CreateDefaultInstance();
@@ -289,7 +289,7 @@ public partial class ClickerTemp
 
 
     /// 각 오브젝트에 맞는 이벤트 함수를 등록합니다
-    private static void SetAllEventData(ClickerTemp instance)
+    private static void SetAllEventData(Tap_N_Gold instance)
     {
         // TopCanvas
         instance.topCanvas_GoldPerTapText.eventData.AddDataUpdateEvent(instance.UpdateTopCanvasGoldPerTapText);
@@ -344,7 +344,7 @@ public partial class ClickerTemp
 
 
     /// 게임을 시작하자마자 화면에 표시되는 모든 UI를 업데이트합니다.
-    private static void SetInitEvent(ClickerTemp instance)
+    private static void SetInitEvent(Tap_N_Gold instance)
     {
         instance.Execute_UpdateTopCanvasGoldPerTapText = true;
         instance.Execute_UpdateTopCanvasGoldPerSecText = true;

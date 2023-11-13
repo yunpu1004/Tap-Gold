@@ -1,5 +1,5 @@
 /// 이 cs 파일은 5분마다 나타나는 특별 보상 이벤트를 관리합니다.
-public partial class ClickerTemp
+public partial class Tap_N_Gold
 {
     /// === 실행 조건 ===
     /// 1. 특별 보상 팝업이 활성화되었을때

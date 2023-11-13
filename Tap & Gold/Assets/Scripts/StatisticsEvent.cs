@@ -1,5 +1,5 @@
 /// 이 cs 파일은 통계 스크롤의 UI를 관리합니다.
-public partial class ClickerTemp
+public partial class Tap_N_Gold
 {
 
     /// === 실행 조건 ===

@@ -2,7 +2,7 @@ using Unity.Mathematics;
 using UnityEngine;
 
 /// 이 cs파일은 유저가 탭을 하는 영역에 해당하는 UI를 관리합니다. 
-public partial class ClickerTemp
+public partial class Tap_N_Gold
 {
     /// === 실행 조건 ===
     /// 1. 활성화된 터치 이펙트가 존재할때

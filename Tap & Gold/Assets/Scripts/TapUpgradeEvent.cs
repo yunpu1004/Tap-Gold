@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// 이 cs파일은 탭 업그레이드 스크롤의 UI를 관리합니다.
-public partial class ClickerTemp
+public partial class Tap_N_Gold
 {
     /// === 실행 조건 ===
     /// 1. 탭 업그레이드 스크롤이 활성화되었을때

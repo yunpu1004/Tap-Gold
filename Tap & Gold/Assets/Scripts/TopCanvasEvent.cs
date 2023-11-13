@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// 이 cs파일은 상단 UI를 관리합니다.
-public partial class ClickerTemp
+public partial class Tap_N_Gold
 {
 
     /// === 실행 조건 ===

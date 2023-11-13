@@ -5,7 +5,7 @@ using static Unity.Mathematics.math;
 
 /// 이 cs파일은 게임의 데이터, 업데이트 흐름을 관리합니다.
 /// 게임에 필요한 모든 객체, 데이터, 플래그 등은 이 파일에 선언되어 있습니다.
-public partial class ClickerTemp : MonoBehaviour
+public partial class Tap_N_Gold : MonoBehaviour
 {
     public bool loadSavedData = true;
 

@@ -4,7 +4,7 @@ using System.Reflection;
 using UnityEngine;
 
 /// 이 cs파일은 게임 내의 모든 버튼 이벤트를 관리합니다.
-public partial class ClickerTemp
+public partial class Tap_N_Gold
 {
 
 # region TopCanvas

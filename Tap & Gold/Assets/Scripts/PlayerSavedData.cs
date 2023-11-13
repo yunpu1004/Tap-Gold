@@ -83,7 +83,7 @@ public class PlayerSavedData
 
 
     /// 현재 게임 데이터를 저장합니다.
-    public static void SavePlayerData(ClickerTemp instance)
+    public static void SavePlayerData(Tap_N_Gold instance)
     {
         bool[] artifactList = new bool[15];
         for(int i = 0; i < artifactList.Length; i++)

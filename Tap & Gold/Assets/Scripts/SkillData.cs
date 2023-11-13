@@ -95,7 +95,7 @@ public class AutoTapSkillData
 
 
     /// 오토 탭 스킬의 남은 시간, 쿨타임을 업데이트합니다.
-    public void UpdateData(ClickerTemp instance)
+    public void UpdateData(Tap_N_Gold instance)
     {
         // 만약 스킬이 활성화 되어있지 않고 쿨타임이 0이면 아무것도 하지 않음
         if(remainedTime <= 0 && remainedCoolTime <= 0) return;
@@ -418,7 +418,7 @@ public class CoolDownSkillData
 
     /// 쿨다운 스킬을 활성화합니다.
     /// 다른 스킬들이 쿨타임을 가지고 있으면 일정 % 만큼 쿨타임을 줄입니다.
-    public void ActivateSkill(ClickerTemp instance)
+    public void ActivateSkill(Tap_N_Gold instance)
     {
         if(level <= 0) return;
         if(remainedCoolTime > 0) return;
