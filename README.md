@@ -29,7 +29,9 @@
 
 ## 구현내용
 ### 클래스 구조도
-(클래스 구조도에 관한 내용)
+<p align="center"><img src="https://github.com/yunpu1004/Tap_N_Gold/assets/53960432/e874f96a-63c7-42ec-b69c-77a5e531e190" width="600" height="500"></p>
+
+
 
 ### 핵심 메커니즘
 (핵심 메커니즘에 관한 내용)
