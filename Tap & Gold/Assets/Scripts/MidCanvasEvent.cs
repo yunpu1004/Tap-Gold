@@ -5,14 +5,42 @@ using UnityEngine;
 public partial class Tap_N_Gold
 {
     /// === 실행 조건 ===
+    /// 1. 플레이어가 화면을 탭했을때
+    /// === 실행 내용 ===
+    /// 1. 탭 한 모든 위치에 터치 이펙트를 활성화 
+    private void UpdateMidCanvasTouchEffectActivation()
+    {
+        if(!Execute_UpdateMidCanvasTouchEffectActivation) return;
+        Execute_UpdateMidCanvasTouchEffectActivation = false;
+
+        for (int i = 0; i < midCanvas_Effects.Length; i++)
+        {
+            if(midCanvas_Effects[i].gameObjectData.GetEnabled()) continue;
+            if(tap_normalizedPosQueue.Count == 0) return;
+
+            midCanvas_Effects[i].gameObjectData.SetEnabled(true);
+            midCanvas_Effects[i].rectTransformData.SetAnchorPos(tap_normalizedPosQueue.Dequeue());
+            var color = midCanvas_Effects[i].textData.GetColor();
+            color.a = 1;
+            midCanvas_Effects[i].textData.SetColor(color);
+            string numericalText_RealGoldPerTap = realGoldPerTap < 1000000 ? realGoldPerTap.ToString("N0") : realGoldPerTap.ToString("0.000e0");
+            midCanvas_Effects[i].textData.SetText($"+<sprite=1> {numericalText_RealGoldPerTap}");
+            
+        }
+
+        tap_normalizedPosQueue.Clear();
+    }
+
+
+    /// === 실행 조건 ===
     /// 1. 활성화된 터치 이펙트가 존재할때
     /// === 실행 내용 ===
     /// 1. 터치 이펙트를 위로 이동시키고 투명도를 낮춤
     /// 2. 투명도가 0이 되면 터치 이펙트를 비활성화
-    private void UpdateMidCanvasTouchEffect()
+    private void UpdateMidCanvasTouchEffectFadeOut()
     {
-        if(!Execute_UpdateMidCanvasTouchEffect) return;
-        Execute_UpdateMidCanvasTouchEffect = false;
+        if(!Execute_UpdateMidCanvasTouchEffectFadeOut) return;
+        Execute_UpdateMidCanvasTouchEffectFadeOut = false;
 
         for (int i = 0; i < midCanvas_Effects.Length; i++)
         {

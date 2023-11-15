@@ -300,7 +300,8 @@ public partial class Tap_N_Gold
         instance.topCanvas_VolumeButton.eventData.AddDataUpdateEvent(instance.UpdateTopCanvasVolumeBtn);
 
         // MidCanvas
-        instance.midCanvas.eventData.AddDataUpdateEvent(instance.UpdateMidCanvasTouchEffect);
+        instance.midCanvas.eventData.AddDataUpdateEvent(instance.UpdateMidCanvasTouchEffectActivation);
+        instance.midCanvas.eventData.AddDataUpdateEvent(instance.UpdateMidCanvasTouchEffectFadeOut);
         instance.midCanvas.eventData.AddDataUpdateEvent(instance.UpdateMidCanvasArtAnimation);
         instance.midCanvas_SpecialBonus.eventData.AddDataUpdateEvent(instance.UpdateMidCanvasSpecialBonus);
 

@@ -480,7 +480,8 @@ public partial class Tap_N_Gold : MonoBehaviour
     private bool Execute_UpdateChallengeNotifyMark = false;
     private bool Execute_UpdateChallengeScroll = false;
     private bool Execute_DisplayReturningPopup = false;
-    private bool Execute_UpdateMidCanvasTouchEffect = false;
+    private bool Execute_UpdateMidCanvasTouchEffectActivation = false;
+    private bool Execute_UpdateMidCanvasTouchEffectFadeOut = false;
     private bool Execute_UpdateMidCanvasArtAnimation = false;
     private bool Execute_UpdateMidCanvasSpecialBonus = false;
     private bool Execute_UpdateSpecialBonusPopup = false;
@@ -490,7 +491,7 @@ public partial class Tap_N_Gold : MonoBehaviour
     /// 배경이미지 전환용 데이터 목록
     #region Effect Data
     private double[] midCanvasArtTiming = {1, 1e4, 1e12, 1e20, 1e28, 1e36, 1e44, 1e52};
-    private List<Vector2> tap_normalizedPosList  = new List<Vector2>();
+    private Queue<Vector2> tap_normalizedPosQueue  = new ();
     #endregion
 
 
@@ -522,8 +523,7 @@ public partial class Tap_N_Gold : MonoBehaviour
                 bonusTapSkillData.UpdateData();
                 bonusSecSkillData.UpdateData();
                 coolDownSkillData.UpdateData();
-                StartTapEffect();
-                Execute_UpdateMidCanvasTouchEffect = true;
+                Execute_UpdateMidCanvasTouchEffectFadeOut = true;
             }
         }
 
@@ -703,34 +703,6 @@ public partial class Tap_N_Gold : MonoBehaviour
         reward = (int)ArtifactData.PrestigeBonus(artifactList, reward);
         reward = max(reward - 8, 0);
         return reward;
-    }
-
-
-
-    /// 탭 이펙트는 플레이어가 화면을 터치할때마다 실행됩니다.
-    /// 이펙트 오브젝트중 비활성화된 오브젝트를 활성화하고, 터치한 위치에 이펙트를 생성합니다.
-    /// 생성된 이펙트는 MidCanvasEvent.cs 의 UpdateMidCanvasTouchEffect() 에서 업데이트 됩니다.
-    private void StartTapEffect()
-    {
-        int count = tap_normalizedPosList.Count;
-        if(count == 0) return;
-
-        for (int i = 0; i < midCanvas_Effects.Length; i++)
-        {
-            if(midCanvas_Effects[i].gameObjectData.GetEnabled()) continue;
-            count--;
-            midCanvas_Effects[i].gameObjectData.SetEnabled(true);
-            midCanvas_Effects[i].rectTransformData.SetAnchorPos(tap_normalizedPosList[count]);
-            var color = midCanvas_Effects[i].textData.GetColor();
-            color.a = 1;
-            midCanvas_Effects[i].textData.SetColor(color);
-            string numericalText_RealGoldPerTap = realGoldPerTap < 1000000 ? realGoldPerTap.ToString("N0") : realGoldPerTap.ToString("0.000e0");
-            midCanvas_Effects[i].textData.SetText($"+<sprite=1> {numericalText_RealGoldPerTap}");
-            if(count == 0) break;
-        }
-
-        tap_normalizedPosList.Clear();
-        
     }
 }
 

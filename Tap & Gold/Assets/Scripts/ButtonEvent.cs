@@ -78,35 +78,34 @@ public partial class Tap_N_Gold
 
         RectTransform rectTransform = midCanvas.rectTransformData.rectTransform;
 
-        /// 에디터에서 실행중일때 마우스 위치를 읽어서 tap_normalizedPosList 에 추가합니다.
+        /// 마우스 또는 터치 위치를 읽어서 이펙트 위치 리스트에 추가합니다. 
+        if(tap_normalizedPosQueue.Count != 0) return;
+
         #if UNITY_EDITOR
-        if(tap_normalizedPosList.Count == 0)
+        Vector2 screenPos = Input.mousePosition;
+        Vector2 localPos = RectTransformUtil.ScreenToLocalPoint(rectTransform, screenPos);
+        Vector2 normalizedPos = RectTransformUtil.LocalToNormalizedPoint(rectTransform, localPos);
+        tap_normalizedPosQueue.Enqueue(normalizedPos);
+
+        #elif UNITY_ANDROID
+        int touchCount = Input.touchCount;
+        for(int i = 0; i < touchCount; i++)
         {
-            Vector2 screenPos = Input.mousePosition;
+            if(Input.GetTouch(i).phase != TouchPhase.Ended) continue;
+            Vector2 screenPos = Input.GetTouch(i).position;
             Vector2 localPos = RectTransformUtil.ScreenToLocalPoint(rectTransform, screenPos);
             Vector2 normalizedPos = RectTransformUtil.LocalToNormalizedPoint(rectTransform, localPos);
-            tap_normalizedPosList.Add(normalizedPos);
+            if(normalizedPos.x < 0 || normalizedPos.x > 1 || normalizedPos.y < 0 || normalizedPos.y > 1) continue;
+            tap_normalizedPosQueue.Enqueue(normalizedPos);
         }
-        
-        /// 모바일에서 실행중일때 터치 위치를 읽어서 tap_normalizedPosList 에 추가합니다.
-        #elif UNITY_ANDROID
-        if(tap_normalizedPosList.Count == 0)
-        {
-            int touchCount = Input.touchCount;
-            var touch = Input.GetTouch(touchCount - 1);
 
-            for(int i = 0; i < touchCount; i++)
-            {
-                if(Input.GetTouch(i).phase != TouchPhase.Ended) continue;
-                Vector2 screenPos = Input.GetTouch(i).position;
-                Vector2 localPos = RectTransformUtil.ScreenToLocalPoint(rectTransform, screenPos);
-                Vector2 normalizedPos = RectTransformUtil.LocalToNormalizedPoint(rectTransform, localPos);
-                if(normalizedPos.x < 0 || normalizedPos.x > 1 || normalizedPos.y < 0 || normalizedPos.y > 1) continue;
-                tap_normalizedPosList.Add(normalizedPos);
-            }
-        }
         #endif
+
+        Execute_UpdateMidCanvasTouchEffectActivation = true;
     }
+
+
+    
 
 # endregion
 
