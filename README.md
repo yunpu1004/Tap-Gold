@@ -6,19 +6,6 @@
 <h4 align="left"><b>[Youtube](https://www.youtube.com/watch?v=5ac4E-wUDOU)</b></h1> 
 <h4 align="left"><b>[주요 구현 소개](https://drive.google.com/file/d/10C8Rd9CeV3jdRbrLsf01jEjqdUY8dvvU/view?usp=sharing)</b></h1> 
 
-
-## 목차
-1. [프로젝트 개요](#프로젝트-개요)
-2. [프로젝트 소개](#프로젝트-소개)
-3. [구현내용](#구현내용)
-   1. [로직 구조도](#로직-구조도)
-   2. [핵심 메커니즘](#핵심-메커니즘)
-   3. [이펙트 구현](#이펙트-구현)
-   4. [UI 구현](#ui-구현)
-   5. [저장 및 로드](#저장-및-로드)
-   6. [보상형 광고](#보상형-광고)
-
-
 ## 프로젝트 개요
 - **게임명 :** Tap & Gold
 - **개발기간 :** 4주
