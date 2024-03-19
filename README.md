@@ -4,7 +4,8 @@
 
 <h4 align="left"><b>[Google Play Store](https://play.google.com/store/apps/details?id=com.HongYunPyo.TapGold)</b></h1> 
 <h4 align="left"><b>[Youtube](https://www.youtube.com/watch?v=5ac4E-wUDOU)</b></h1> 
-<h4 align="left"><b>[주요 구현 소개](https://drive.google.com/file/d/10C8Rd9CeV3jdRbrLsf01jEjqdUY8dvvU/view?usp=sharing)</b></h1> 
+
+<h4 align="left"><b>[주요 구현 소개]<br>[Google Drive](https://drive.google.com/file/d/10C8Rd9CeV3jdRbrLsf01jEjqdUY8dvvU/view?usp=sharing)<br>[네이버 MyBox](http://naver.me/GfbNbepT)</b></h4>
 
 ## 프로젝트 개요
 - **게임명 :** Tap & Gold
