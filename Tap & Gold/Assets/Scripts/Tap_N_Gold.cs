@@ -346,6 +346,7 @@ public partial class Tap_N_Gold : MonoBehaviour
             _prestigePoint = value;
         }
     }
+    
 
     public TempBuffData tapTempBuffData, secTempBuffData;
     public List<ArtifactData> artifactList;
@@ -502,7 +503,6 @@ public partial class Tap_N_Gold : MonoBehaviour
     {
         UpdateGameState();
         UpdateScrollState();
-        UpdatePopupState();
         lastSec = (int)AppData.totalDeltaTime;
     }
 
@@ -516,7 +516,7 @@ public partial class Tap_N_Gold : MonoBehaviour
         /// 게임 상태가 노말일때
         if(current == GameState.Normal)
         {
-            /// 스킬의 지속시간 및 쿨타임을 감소시키고, 탭 이펙트를 업데이트 합니다.
+            /// 스킬의 지속시간 및 쿨타임을 갱신시키고, 탭 이펙트를 업데이트 합니다.
             if(before == GameState.Normal)
             {
                 autoTapSkillData.UpdateData(this);
@@ -611,19 +611,37 @@ public partial class Tap_N_Gold : MonoBehaviour
         /// 탭 업그레이드 스크롤이 활성화 되있으면 탭 업그레이드 스크롤을 업데이트 합니다.
         if(current == ScrollState.TapUpgrade)
         {
-            Execute_UpdateTapUpgradeScroll = true;
+            if(before != ScrollState.TapUpgrade)
+            {
+                /// 이번 프레임에 스크롤을 전환했다면 현재 열린 스크롤의 UI를 업데이트 합니다.
+                Execute_UpdateTapUpgradeScroll = true;
+            }
+            else
+            {
+                /// 스크롤 전환이 없는 경우 입니다.
+            }
         }
 
         /// 초당 업그레이드 스크롤이 활성화 되있으면 초당 업그레이드 스크롤을 업데이트 합니다.
         else if(current == ScrollState.SecUpgrade)
         {
-            Execute_UpdateSecUpgradeScroll = true;
-        }
+            if(before != ScrollState.SecUpgrade)
+            {
+                Execute_UpdateSecUpgradeScroll = true;
+            }
+            else
+            {
 
+            }
+        }
         
         else if(current == ScrollState.Artifact)
         {
-            if(before == ScrollState.Artifact)
+            if(before != ScrollState.Artifact)
+            {
+
+            }
+            else
             {
 
             }
@@ -632,7 +650,11 @@ public partial class Tap_N_Gold : MonoBehaviour
 
         else if(current == ScrollState.Challenge)
         {
-            if(before == ScrollState.Challenge)
+            if(before != ScrollState.Challenge)
+            {
+
+            }
+            else
             {
 
             }
@@ -641,50 +663,17 @@ public partial class Tap_N_Gold : MonoBehaviour
 
         else if(current == ScrollState.Statistics)
         {
-           
+            if(before != ScrollState.Statistics)
+            {
+
+            }
+            else
+            {
+
+            }
         }
 
         _scrollState.before = _scrollState.current;
-    }
-
-
-
-    /// PopupState 업데이트 함수입니다.
-    private void UpdatePopupState()
-    {
-        var before = _popupState.before;
-        var current = _popupState.current;
-
-        if(current == PopupState.None)
-        {
-            
-        }
-
-
-        else if(current == PopupState.TapTempBuff)
-        {
-            
-        }
-
-
-        else if(current == PopupState.SecTempBuff)
-        {
-            
-        }
-
-
-        else if(current == PopupState.Prestige)
-        {
-           
-        }
-
-
-        else if(current == PopupState.Gacha)
-        {
-           
-        }
-
-        _popupState.before = _popupState.current;
     }
 
 
