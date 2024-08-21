@@ -9,7 +9,7 @@ public class MidCanvasUI : MonoBehaviour
 {
     public Camera mainCamera;
     public Canvas canvas;
-    public Button tapButton;
+    public PointerClickHandler tapArea;
     
     [HideInInspector] public TextMeshProUGUI[] textEffects;
 

@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 // MidCanvasUI 컴포넌트를 초기화하는 클래스입니다
 public class MidCanvasUIInitializer : MonoBehaviour
@@ -16,18 +17,18 @@ public class MidCanvasUIInitializer : MonoBehaviour
         {
             midCanvasUI.textEffects[i] = effectsParent.GetChild(i).GetComponent<TextMeshProUGUI>();
         }
-        midCanvasUI.tapButton.onClick.AddListener(OnTapButtonClick);
+        midCanvasUI.tapArea.OnPointerClickEvent += OnTapButtonClick;
     }
 
     // 탭 버튼을 클릭했을 때 실행되는 메소드입니다
     // 골드를 획득하고 이펙트를 재생합니다
-    private void OnTapButtonClick()
+    private void OnTapButtonClick(PointerEventData eventData)
     {
         // 골드 획득
         GameController.instance.currentPlayerData.EarnGoldPerTap();
 
         // 이펙트 재생
-        Vector3 touchPos = Input.mousePosition;
+        Vector3 touchPos = eventData.position;
         touchPos.z = 10f;
         double goldPerTap = GameController.instance.currentPlayerData.GetGoldPerTap();
         midCanvasUI.PlayTextEffect(goldPerTap, touchPos);
